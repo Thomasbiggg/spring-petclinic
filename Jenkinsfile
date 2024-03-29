@@ -14,11 +14,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    def scannerHome = tool 'sonarqube scanner'; // 'SonarQube Scanner' is the name you've given to your SonarQube Scanner installation in Jenkins configuration
-                    withSonarQubeEnv('sonarqube') { // 'YourSonarQubeServer' is the name you've given to your SonarQube server configuration in Jenkins
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=test -Dsonar.projectName='test'"
-                    }
+                withSonarQubeEnv('ServerNameSonar') {
+                    bat '''mvn clean verify sonar:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' -Dsonar.host.url=http://192.168.1.158:9000''' //port 9000 is default for sonar
+                    echo 'SonarQube Analysis Completed'
                 }
             }
         }
