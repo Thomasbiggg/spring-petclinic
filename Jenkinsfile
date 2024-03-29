@@ -13,17 +13,17 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            // steps {
-            //     // Runs Maven build
-            //     sh './mvnw package'
-            // }
-        
-
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh 'mvn clean package sonar:sonar' //port 9000 is default for sonar
                     echo 'SonarQube Analysis Completed'
                 }
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh './mvnw spring-boot:run'
             }
         }
     }
