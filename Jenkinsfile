@@ -24,7 +24,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh './mvnw package'
-                sh "nohup sh -c 'java -jar target/*.jar > output.log 2>&1 &'"
+                sh 'timeout 1m java -jar target/*.jar'
             }
         }
     }
