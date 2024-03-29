@@ -24,7 +24,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh './mvnw package'
-                sh 'screen -dmS myapp java -jar target/*.jar'
+                sh 'tmux new-session -d -s myapp "java -jar target/*.jar"'
             }
         }
     }
