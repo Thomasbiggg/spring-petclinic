@@ -24,7 +24,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh './mvnw package'
-                sh 'nohup java -jar target/*.jar'
+                sh 'echo "java -jar target/*.jar" | at now'
             }
         }
     }
