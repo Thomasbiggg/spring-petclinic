@@ -21,7 +21,7 @@ pipeline {
 
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' -Dsonar.host.url=http://localhost:9000''' //port 9000 is default for sonar
+                    sh 'mvn clean package sonar:sonar' //port 9000 is default for sonar
                     echo 'SonarQube Analysis Completed'
                 }
             }
