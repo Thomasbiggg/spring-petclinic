@@ -24,7 +24,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh './mvnw package'
-                sh 'echo "java -jar target/*.jar" | at now'
+                sh 'screen -dmS myapp java -jar target/*.jar'
             }
         }
     }
