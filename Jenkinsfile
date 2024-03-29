@@ -24,7 +24,12 @@ pipeline {
         stage('Run') {
             steps {
                 sh './mvnw package'
-                sh 'timeout 1m java -jar target/*.jar'
+                sh '''
+                    java -jar target/*.jar &
+                    PID=$!
+                    sleep 60 # 5 minutes
+                    kill $PID
+                    '''
             }
         }
     }
