@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    // tools {
-    //     maven 'Maven'
-    // }
 
     stages {
         stage('Git Checkout') {
@@ -12,14 +9,14 @@ pipeline {
             }
         }
 
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube') {
-        //             sh 'mvn clean package sonar:sonar' //port 9000 is default for sonar
-        //             echo 'SonarQube Analysis Completed'
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh 'mvn clean package sonar:sonar'
+                    echo 'SonarQube Analysis Completed'
+                }
+            }
+        }
 
         stage('Run') {
             steps {
@@ -27,9 +24,10 @@ pipeline {
                 sh '''
                     java -jar target/*.jar &
                     PID=$!
-                    sleep 60 # 5 minutes
+                    sleep 60 # wait for 1 minutes
                     kill $PID
                     '''
+                echo 'Run and Exit Completed'
             }
         }
     }
