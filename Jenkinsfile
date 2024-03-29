@@ -12,17 +12,18 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh 'mvn clean package sonar:sonar' //port 9000 is default for sonar
-                    echo 'SonarQube Analysis Completed'
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonarqube') {
+        //             sh 'mvn clean package sonar:sonar' //port 9000 is default for sonar
+        //             echo 'SonarQube Analysis Completed'
+        //         }
+        //     }
+        // }
 
         stage('Run') {
             steps {
+                sh './mvnw package'
                 sh 'java -jar target/*.jar'
             }
         }
