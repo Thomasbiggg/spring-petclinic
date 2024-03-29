@@ -1,35 +1,24 @@
 pipeline {
     agent any
-
     tools {
-        maven 'Maven-Tool'
+        maven 'Maven'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Git Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Thomasbiggg/spring-petclinic.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Thomasbiggg/spring-petclinic.git']])
+                echo 'Git Checkout Completed'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar-jenkins') {
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv('sonarqube') {
+                    bat '''mvn clean verify sonar:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' -Dsonar.host.url=http://localhost:9000''' //port 9000 is default for sonar
+                    echo 'SonarQube Analysis Completed'
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            deleteDir()
         }
     }
 }
