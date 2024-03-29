@@ -23,7 +23,7 @@ pipeline {
 
         stage('Run') {
             steps {
-                sh './mvnw spring-boot:run'
+                sh 'java -jar target/*.jar'
             }
         }
     }
