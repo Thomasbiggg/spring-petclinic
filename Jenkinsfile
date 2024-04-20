@@ -32,10 +32,10 @@ pipeline {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
                         inventory: '/var/jenkins_home/ansible/inventory.ini',
-                        remote_user: 'root',
-                        host_key_checking: 'False',
-                        extraVars: [
-                            "workspace": env.WORKSPACE
+                        extras: [
+                            '-e workspace=' + env.WORKSPACE,
+                            '-u root', // Equivalent to 'remote_user'
+                            '--ssh-common-args=\"-o StrictHostKeyChecking=no\"' // Set SSH options directly
                         ]
                     )
                 }
