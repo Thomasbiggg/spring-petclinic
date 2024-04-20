@@ -38,7 +38,8 @@ pipeline {
                 script {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
-                        inventory: '/var/jenkins_home/ansible/production.ini',
+                        inventory: '/var/jenkins_home/ansible/inventory.ini',
+                        remote_user: 'root',
                         extraVars: [
                             "workspace": env.WORKSPACE
                         ]
