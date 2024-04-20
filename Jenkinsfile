@@ -37,9 +37,8 @@ pipeline {
             steps {
                 script {
                     ansiblePlaybook(
-                        playbook: 'ansible/playbook.yml',
-                        inventory: 'ansible/inventory.ini',
-                        credentialsId: 'ansible-ssh-key'
+                        playbook: '/var/jenkins_home/ansible/playbook.yml',
+                        inventory: '/var/jenkins_home/ansible/inventory.ini',
                         extraVars: [
                             "workspace": env.WORKSPACE
                         ]
