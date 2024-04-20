@@ -17,18 +17,11 @@ pipeline {
             }
         }
 
-        // // To perform static code analysis on the checked-out source code using SonarQube, which is a tool for continuously inspecting code quality and security vulnerabilities.
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube') {
-        //             sh 'mvn clean package sonar:sonar'
-        //             echo 'SonarQube Analysis Completed'
-        //         }
-        //     }
-        // }
+
         stage('Build Application') {
             steps {
-                sh 'mvn clean package'
+                sh './mvnw package'
+                sh "cp target/*.jar ${env.WORKSPACE}/spring-petclinic.jar"
             }
         }
 
@@ -40,6 +33,7 @@ pipeline {
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
                         inventory: '/var/jenkins_home/ansible/inventory.ini',
                         remote_user: 'root',
+                        host_key_checking: 'False',
                         extraVars: [
                             "workspace": env.WORKSPACE
                         ]
