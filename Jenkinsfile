@@ -38,7 +38,7 @@ pipeline {
                 script {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
-                        inventory: '/var/jenkins_home/ansible/inventory.ini',
+                        inventory: '/var/jenkins_home/ansible/production.ini',
                         extraVars: [
                             "workspace": env.WORKSPACE
                         ]
