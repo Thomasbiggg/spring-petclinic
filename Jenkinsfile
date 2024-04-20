@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-
+        // Build the package and copy to current workspace
         stage('Build Application') {
             steps {
                 sh './mvnw package'
@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        // To build the project with Maven, run the resulting JAR file to start the application, wait for a certain period (1 min) for the application to run, and then shut it down.
+        // Deploy the resulting JAR file to the production server using anisible.
         stage('Deploy Application') {
             steps {
                 script {
