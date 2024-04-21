@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        // Build the package and copy to current workspace
+        // Build the package and copy to current WORKSPACE
         stage('Build Application') {
             steps {
                 sh './mvnw package'
@@ -25,14 +25,16 @@ pipeline {
             }
         }
 
-        // Deploy the resulting JAR file to the production server using.
+        // To build the project with Maven, run the resulting JAR file to start the application, wait for a certain period (1 min) for the application to run, and then shut it down.
         stage('Deploy Application') {
             steps {
                 script {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
                         inventory: '/var/jenkins_home/ansible/inventory.ini',
-                        extras: "-u root --ssh-common-args='-o StrictHostKeyChecking=no' -e workspace=${env.WORKSPACE}"
+                        extraVars: [
+                            "workspace": env.WORKSPACE
+                        ]
                     )
                 }
             }
