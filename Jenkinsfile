@@ -25,17 +25,15 @@ pipeline {
             }
         }
 
-        // Deploy the resulting JAR file to the production server using anisible.
+        // Deploy the resulting JAR file to the production server using.
         stage('Deploy Application') {
             steps {
                 script {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
                         inventory: '/var/jenkins_home/ansible/inventory.ini',
-                        extras: [
-                            '-e workspace=' + env.WORKSPACE,
-                            '-u root', // Equivalent to 'remote_user'
-                            '--ssh-common-args=\"-o StrictHostKeyChecking=no\"' // Set SSH options directly
+                        extraVars: [
+                            "workspace": env.WORKSPACE
                         ]
                     )
                 }
