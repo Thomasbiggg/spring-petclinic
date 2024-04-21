@@ -32,10 +32,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: '/var/jenkins_home/ansible/playbook.yml',
                         inventory: '/var/jenkins_home/ansible/inventory.ini',
-                        extras: "-u root --ssh-common-args='-o StrictHostKeyChecking=no'",
-                        extraVars: [
-                            "workspace": env.WORKSPACE
-                        ]
+                        extras: "-u root --ssh-common-args='-o StrictHostKeyChecking=no' -e workspace=${env.WORKSPACE}"
                     )
                 }
             }
